@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 
-class NewTransactions extends StatelessWidget {
+class NewTransactions extends StatefulWidget {
   final Function addTx;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
 
   NewTransactions(this.addTx);
+
+  @override
+  _NewTransactionsState createState() => _NewTransactionsState();
+}
+
+class _NewTransactionsState extends State<NewTransactions> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
   void submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return; //addTx will not execute and this is when button is pressed before amount entered
     }
-    addTx(
+    //widget. is special property of state class which takes properties of the widget class
+    widget.addTx(
       enteredTitle,
       enteredAmount,
     );
+    Navigator.of(context)
+        .pop(); //pop() closes the modalsheet once input entered
+    // (context) is special prop gives access to context related to widget
   }
 
   @override
