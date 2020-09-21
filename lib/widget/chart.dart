@@ -32,7 +32,9 @@ class Chart extends StatelessWidget {
   }
 
   double get totalSpending {
-    return groupedTransactionValue.fold(0.0, (sum, item) {
+    return groupedTransactionValue.fold(0.0, (sum,
+            item) //fold() helps to change list to another type with a logic we provide
+        {
       return sum + item['amount'];
     });
   }
@@ -42,16 +44,25 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransactionValue.map((data) {
-          return ChartBar(
-            data['day'],
-            data['amount'],
-            totalSpending == 0.0
-                ? 0.0
-                : (data['amount'] as double) / totalSpending,
-          ); //string interpolation
-        }).toList(),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment:
+              MainAxisAlignment.spaceAround, //spreading out the chart bar
+          children: groupedTransactionValue.map((data) {
+            return Flexible(
+              fit: FlexFit
+                  .tight, //force child into its assigned size and it can't grow (for large amount values)
+              child: ChartBar(
+                data['day'],
+                data['amount'],
+                totalSpending == 0.0
+                    ? 0.0
+                    : (data['amount'] as double) / totalSpending,
+              ),
+            ); //string interpolation
+          }).toList(),
+        ),
       ),
     );
   }

@@ -11,8 +11,9 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-            '\u{20B9} ${spendingPctOfTotal.toStringAsFixed(0)}'), //present rounded percentage coz of toStringAsFixed
+        FittedBox(
+          child: Text('\u{20B9} ${spendingAmount.toStringAsFixed(0)}'),
+        ), //present rounded percentage coz of toStringAsFixed
         SizedBox(
           height: 4,
         ), //spacing
